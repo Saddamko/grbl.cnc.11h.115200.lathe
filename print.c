@@ -23,11 +23,40 @@
 
 void lcd_message(char *line)
 {
-//	  lcd1602_clear();
-	  lcd1602_goto_xy(0,1);
-	  lcd1602_send_string("                ");
+	
+	  int32_t x = sys_position[0];
+	  int32_t y = sys_position[1];
+	  
+	  lcd1602_clear();
+	  lcd1602_goto_xy(0,0);
+	  lcd1602_send_string("x:");
+	  lcd_print_uint32_base10(x);
+
+	  lcd1602_send_string(";  y:");
+	  lcd_print_uint32_base10(y);
+	  
+//	  lcd1602_send_string("                ");
 	  lcd1602_goto_xy(0,1);
 	  lcd1602_send_string(line);
+}
+
+void lcd_print_uint32_base10(uint32_t n)
+{
+  if (n == 0) {
+    lcd1602_send_char('0');
+    return;
+  }
+
+  unsigned char buf[10];
+  uint8_t i = 0;
+
+  while (n > 0) {
+    buf[i++] = n % 10;
+    n /= 10;
+  }
+
+  for (; i > 0; i--)
+    lcd1602_send_char('0' + buf[i-1]);
 }
 
 void printString(const char *s)
@@ -35,7 +64,7 @@ void printString(const char *s)
 //	lcd1602_clear();
   while (*s)
   { serial_write(*s++);
-	lcd1602_send_char(s);
+//	lcd1602_send_char(s);
   }
 }
 
@@ -47,7 +76,7 @@ void printPgmString(const char *s)
 //  lcd1602_clear();
   while ((c = pgm_read_byte_near(s++)))
   { serial_write(c);
-	lcd1602_send_char(c);
+//	lcd1602_send_char(c);
   }
 }
 

@@ -84,6 +84,7 @@ void protocol_main_loop()
         line[char_counter] = 0; // Set string termination character.
         #ifdef REPORT_ECHO_LINE_RECEIVED
           report_echo_line_received(line);
+		  lcd_message("ok");
         #endif
 
         // Direct and execute one line of formatted input, and report status of execution.
