@@ -71,6 +71,7 @@ uint8_t gc_execute_line(char *line)
      executed after successful error-checking. The parser block struct also contains a block
      values struct, word tracking variables, and a non-modal commands tracker for the new
      block. This struct contains all of the necessary information to execute the block. */
+	 
 
   memset(&gc_block, 0, sizeof(parser_block_t)); // Initialize the parser block struct.
   memcpy(&gc_block.modal,&gc_state.modal,sizeof(gc_modal_t)); // Copy current modes
@@ -1076,6 +1077,7 @@ uint8_t gc_execute_line(char *line)
       } // == GC_UPDATE_POS_NONE
     }     
   }
+  lcd_message1();
 
   // [21. Program flow ]:
   // M0,M1,M2,M30: Perform non-running program flow actions. During a program pause, the buffer may
@@ -1122,12 +1124,15 @@ uint8_t gc_execute_line(char *line)
         spindle_set_state(SPINDLE_DISABLE,0.0);
         coolant_set_state(COOLANT_DISABLE);
       }
+	  
       report_feedback_message(MESSAGE_PROGRAM_END);
     }
     gc_state.modal.program_flow = PROGRAM_FLOW_RUNNING; // Reset program flow.
+    
   }
 
   // TODO: % to denote start of program.
+
 
   return(STATUS_OK);
 }

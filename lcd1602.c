@@ -46,7 +46,7 @@ void lcd1602_send_char(char c)
 {
 	char highc = 0;
 
-	if (c>32 && c<128)
+	if (c>=32 && c<128)
 	{	
 	highc = c >> 4;
 	i2c_send_packet (lcd.led_pin |= 0x01, SLA_W);

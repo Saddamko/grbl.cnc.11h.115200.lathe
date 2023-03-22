@@ -103,7 +103,7 @@ int main(void)
     // Print welcome message. Indicates an initialization has occured at power-up or with a reset.
     report_init_message();
 	lcd1602_clear();
-	lcd_message("Grbl 1.1h");
+	lcd_message2("Grbl 1.1h 115200");
 
     // Start Grbl main loop. Processes program inputs and executes them.
     protocol_main_loop();

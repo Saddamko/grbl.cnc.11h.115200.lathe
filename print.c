@@ -21,23 +21,35 @@
 
 #include "grbl.h"
 
-void lcd_message(char *line)
+void lcd_message1(void)
 {
-	
-	  int32_t x = sys_position[0];
-	  int32_t y = sys_position[1];
+	  system_convert_array_steps_to_mpos(gc_state.position,sys_position);
+	  int32_t x = gc_state.position[0];
+	  int32_t y = gc_state.position[1];
+	  int32_t z = gc_state.position[2];
 	  
-	  lcd1602_clear();
+//	  lcd1602_clear();
+	  lcd1602_goto_xy(0,0);
+	  lcd1602_send_string("                ");
 	  lcd1602_goto_xy(0,0);
 	  lcd1602_send_string("x:");
 	  lcd_print_uint32_base10(x);
-
-	  lcd1602_send_string(";  y:");
+	  lcd1602_send_string(" y:");
 	  lcd_print_uint32_base10(y);
+	  lcd1602_send_string(" z:");
+	  lcd_print_uint32_base10(z);
 	  
 //	  lcd1602_send_string("                ");
-	  lcd1602_goto_xy(0,1);
-	  lcd1602_send_string(line);
+//	  lcd1602_goto_xy(0,1);
+//	  lcd1602_send_string(line);
+}
+
+void lcd_message2(char *line)
+{
+	lcd1602_goto_xy(0,1);
+	lcd1602_send_string("                ");
+	lcd1602_goto_xy(0,1);
+	lcd1602_send_string(line);
 }
 
 void lcd_print_uint32_base10(uint32_t n)

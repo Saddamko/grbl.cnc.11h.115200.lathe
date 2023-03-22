@@ -114,7 +114,9 @@ void report_status_message(uint8_t status_code)
   switch(status_code) {
     case STATUS_OK: // STATUS_OK
       printPgmString(PSTR("ok\r\n")); break;
+//	  lcd_message("ok");
     default:
+//	lcd_message("error:");
       printPgmString(PSTR("error:"));
       print_uint8_base10(status_code);
       report_util_line_feed();
@@ -455,6 +457,7 @@ void report_echo_line_received(char *line)
 {
   printPgmString(PSTR("[echo: ")); printString(line);
   report_util_feedback_line_feed();
+  lcd_message2(line);
 }
 
 
